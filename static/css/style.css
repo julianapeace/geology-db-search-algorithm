@@ -1,17 +1,18 @@
-.queryform{
-  width:70%;
-  padding:50px;
-}
-
 .collarcolor {
   margin-right: 1em;
   padding-top: 2em;
 }
-
+.queryform, .tooltips{
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
 /************************************************************
 MULTI PART FORM
 
 ************************************************************/
+img{
+  width: 100%;
+}
 .legend{
   /*border: 1px solid black;*/
   background-color: #eee;

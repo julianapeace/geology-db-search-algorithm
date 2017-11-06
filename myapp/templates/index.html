@@ -1,64 +1,96 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
 
-{% block content %}
-<div class="queryform">
-<form class="" action="/query" method="post">
-  <div class="form-row">
-    <legend class="legend">Basic</legend>
-    <div class="col">
-      <label for="author">Author</label>
-      <input type="text" class="form-control" name="author" id="author" value = "peter">
-    </div>
-    <div class="col">
-      <label for="title">Title</label>
-      <input type="text" class="form-control" name="title" id="title">
-    </div>
-  </div>
-  <br>
-  <div class="form-row">
-    <legend class="legend">Journal/DOI</legend>
-    <div class="col">
-      <label for="journal">Journal</label>
-      <input type="text" class="form-control" name="journal" id="journal">
-    </div>
-    <div class="col">
-      <label for="doi">DOI</label>
-      <input type="text" class="form-control" name="doi" id="doi">
-    </div>
-  </div>
-  <br>
-  <div class="year">
-    <legend class="legend">Year</legend>
-  <div class="form-group">
-    <label>Publication Year</label>
-    <input id="range" type="radio" name="year" value="range">
-    <label class="radio-label" for="range">Range</label>
-    <input id="exact" type="radio" name="year" value="exact">
-    <label class="radio-label" for="exact">Exact</label>
-  </div>
-  <div class="form-row" id="pub_year_range">
-    <div class="col">
-      <label for="minpubyear">minpubyear</label>
-      <input type="text" class="form-control" name="minpubyear" id="minpubyear">
-    </div>
-    <div class="col">
-      <label for="maxpubyear">maxpubyear</label>
-      <input type="text" class="form-control" name="maxpubyear" id="maxpubyear">
-    </div>
-  </div>
-  <div class="form-row" id="exact_pub_year">
-    <div class="col">
-      <label for="exactpubyear">exactpubyear</label>
-      <input type="text" class="form-control" name="exactpubyear" id="exactpubyear">
-    </div>
-  </div>
-</div>
-<br>
-  <div class="form-row">
-    <legend class="legend">Output</legend>
-    <div class="col">
-    <label for="output_type">Output Type</label>
-    <select class="form-control" name="output_type" id="output">
+
+      <div class="queryform">
+        <form class="" action="/query" method="post">
+          <div id="basic">
+          <legend class="legend">Basic</legend>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <label for="author">Author</label>
+              <input type="text" class="form-control" name="author" id="author" value="peter">
+            </div>
+            <div class="col">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" name="title" id="title">
+            </div>
+          </div>
+          <br>
+          <div class="form-row">
+            <legend class="legend">Journal/DOI</legend>
+            <div class="col">
+              <label for="journal">Journal</label>
+              <input type="text" class="form-control" name="journal" id="journal">
+            </div>
+            <div class="col">
+              <label for="doi">DOI</label>
+              <input type="text" class="form-control" name="doi" id="doi">
+            </div>
+          </div>
+          <br>
+          <div class="year">
+            <div id="year">
+            <legend class="legend">Year</legend>
+            </div>
+            <div class="form-group">
+              <label>Publication Year</label>
+              <input id="range" type="radio" name="year" value="range">
+              <label class="radio-label" for="range">Range</label>
+              <input id="exact" type="radio" name="year" value="exact">
+              <label class="radio-label" for="exact">Exact</label>
+            </div>
+            <div class="form-row" id="pub_year_range">
+              <div class="col">
+                <label for="minpubyear">minpubyear</label>
+                <input type="text" class="form-control" name="minpubyear" id="minpubyear">
+              </div>
+              <div class="col">
+                <label for="maxpubyear">maxpubyear</label>
+                <input type="text" class="form-control" name="maxpubyear" id="maxpubyear">
+              </div>
+            </div>
+            <div class="form-row" id="exact_pub_year">
+              <div class="col">
+                <label for="exactpubyear">exactpubyear</label>
+                <input type="text" class="form-control" name="exactpubyear" id="exactpubyear">
+              </div>
+            </div>
+          </div>
+          <br>
+          <div id="geography">
+          <legend class="legend">Geography</legend>
+        </div>
+          <div class="form-group">
+            <label for="polygon">Polygon</label>
+            <img src="/static/img/map.png" alt="google maps geographic polygon">
+            <label for="nesw">N-E-S-W Input</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="text" name="north" placeholder="north" value="">
+              </div>
+              <div class="col">
+                <input type="text" name="east" placeholder="east" value="">
+              </div>
+              <div class="col">
+                <input type="text" name="south" placeholder="south" value="">
+              </div>
+              <div class="col">
+                <input type="text" name="west" placeholder="west" value="">
+              </div>
+
+            </div>
+          </div>
+          <div id="output">
+          <legend class="legend">Output</legend>
+        </div>
+          <div class="form-row">
+            <div class="col">
+              <label for="output_type">Output Type</label>
+              <select class="form-control" name="output_type" id="output">
       <option>html</option>
       <option>json</option>
       <option>csv</option>
@@ -66,28 +98,37 @@
       <option>xml</option>
       <option>staticmap</option>
     </select>
-  </div>
-  <div class="col">
-    <label for="searchtype">Search Type</label>
-    <select class="form-control" name="searchtype" id="searchtype">
+            </div>
+            <div class="col">
+              <label for="searchtype">Search Type</label>
+              <select class="form-control" name="searchtype" id="searchtype">
       <option>rowdata</option>
       <option>count</option>
       <option>distinctitems</option>
     </select>
-  </div>
-</div>
-<br>
-<div class="form-group">
-  <label>Show Column Names (applicable to csv and html outputs)</label>
-  <input id="yes" type="radio" name="show_column_names" value="yes">
-  <label class="radio-label" for="yes">Yes</label>
-  <input id="no" type="radio" name="show_column_names" value="no">
-  <label class="radio-label" for="no">No</label>
-</div>
-
-  <div class="form-group">
-    <label for="output_fields">Select Multiple Outputs</label>
-    <select multiple class="form-control" name="output_fields" id="output_fields" size="15">
+            </div>
+          </div>
+          <br>
+          <div class="form-row">
+            <div class="col">
+              <label>Standard Items</label>
+              <input id="yes-standard_items" type="radio" name="standard_items" value="yes">
+              <label class="radio-label" for="yes-standard_items">Yes</label>
+              <input id="no-standard_items" type="radio" name="standard_items" value="no">
+              <label class="radio-label" for="no-standard_items">No</label>
+            </div>
+            <div class="col">
+              <label>Show Column Names</label>
+              <input id="yes" type="radio" name="show_column_names" value="yes">
+              <label class="radio-label" for="yes">Yes</label>
+              <input id="no" type="radio" name="show_column_names" value="no">
+              <label class="radio-label" for="no">No</label>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="output_fields">Select Multiple Outputs</label>
+            <select multiple class="form-control" name="output_fields" id="output_fields" size="15">
       <option>sample_id</option>
       <option>url</option>
       <option>author</option>
@@ -102,10 +143,92 @@
       <option>composition</option>
       <option>rock_name</option>
     </select>
-  </div>
-  <button class="btn btn-secondary" type="submit" name="button">SUBMIT</button>
-</form>
-</div>
+          </div>
+          <button class="btn btn-secondary" type="submit" name="button">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="tooltips">
+        <div id="basic-tooltip">
+          <h5>Author</h5>
+          <p>Author of reference citation</p>
+          <h5>Title</h5>
+          <p>Title of citation journal article.</p>
+          <h5>Journal</h5>
+          <p>Name of citation journal.</p>
+          <h5>DOI</h5>
+          <p>DOI of citation article. (Note: not all ciations have a DOI assigned.)</p>
+        </div>
+        <div id="year-tooltip">
+          <h5>minpubyear</h5>
+          <p>Minimum publication year of citation article. If minpubyear is provided, maxpubyear must also be provided.
+          </p>
+          <h5>maxpubyear</h5>
+          <p>Maximum publication year of citation article. If maxpubyear is provided, minpubyear must also be provided.
+          </p>
+          <h5>exactpubyear</h5>
+          <p>Exact publication year of citation article.
+          </p>
+        </div>
+        <div id="geography-tooltip">
+          <h5>polygon</h5>
+          <p>This field allows a polygon to be provided in order to constrain results geographically. The polygon must be provided in a closed format of comma-delimited coordinate pairs.</p>
+          <h6>Example:</h6>
+          <p>-109.35 36.7875,-105.525 40.725,-104.5125 37.0125,-107.1 35.4375,-109.35 36.7875</p>
+          <h5>north</h5>
+          <p>Northern bound of a geographic envelope used to constrain results geographically. If a northern bound is provided, an east, south, and west value must also be provided.</p>
+          <h5>east</h5>
+          <p>Eastern bound of a geographic envelope used to constrain results geographically. If an eastern bound is provided, a south, west, and north value must also be provided.
+          </p>
+          <h5>south</h5>
+          <p>Southern bound of a geographic envelope used to constrain results geographically. If a southern bound is provided, a west, north, and east value must also be provided.</p>
+          <h5>west</h5>
+          <p>Western bound of a geographic envelope used to constrain results geographically. If a western bound is provided, a north, east, and south value must also be provided.</p>
+        </div>
+        <div id="output-tooltip">
+<h5>          searchtype
+</h5>
+<p>          Desired type of search query. Possible values are "count", "rowdata", and "distinctitems"
+  <br><br>
 
+          count: returns count of results from query.
+          rowdata: returns table of results from query in the format of "outputtype" below. distinctitems: returns list of distinct items found within current query in the format of "outputtype" below.<p>
+<h5>          outputtype
+</h5>
+<p>          Desired output type from query. Possible values are "html", "csv", "xml", "json", "jsonp" and "staticmap".
+  <br><br>
+
+          <strong>html:</strong> returns HTML table of results from query.
+          <br>
+          <strong>csv:</strong> returns CSV table of results from query.
+          <br>
+          <strong>xml:</strong> returns XML document of results from query.
+          <br>
+          <strong>json:</strong> returns JSON document of results from query.
+          <br>
+          <strong>jsonp:</strong> returns JSON string wrapped in a Javascript function call defined by "jsonpfunction" below:
+          <br>
+          <strong>staticmap:</strong> returns map image of results from query.
+          <br><br>
+
+          Please note: When a searchtype of "count" is set, "html", "csv", and "staticmap" will return a plaintext integer count of samples from the query.<p>
+
+<h5>            standarditems
+</h5>
+<p>This element has a value of yes/no and determines if the standard chemical values should be displayed in the html,csv, or xml outputs. Using the standard items allows a consistent output from query to query for use in tables.
+</p>
+<h5>Standard items are:
+</h5>
+<p>SiO2, TiO2, Al2O3, Cr2O3, Fe2O3, Fe2O3 Total, FeO, FeO Total, NiO, MnO, MgO, CaO, Na2O, K2O, P2O5, LOI, H2O, H2O-, H2O+, S, Co2, F, Cl, Ag, As, Au, B, Ba, Be, Bi, Cd, Co, Cr, Cs, Cu, Ga, Hf, Hg, I, Ir, K, Li, Mn, Mo, Nb, Ni, Os, Pb, Pd, Pt, Rb, Re, S, Sb, Sc, Se, Sn, Sr, Ta, Te, Th, Ti, Tl, U, V, W, Y, Zn, Zr, La, Ce, Pr, Nd, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, 87Sr / 86Sr, 143Nd / 144Nd, 206Pb / 204Pb, 207Pb / 204Pb, 208Pb / 204Pb, 176Hf / 177Hf, 176Lu / 177Hf, 187Os / 188Os, 10Be / Be, 3He / 4He, 87Rb/86Sr, 147Sm/144Nd, 238U/206Pb, 235U/207Pb, 232Th/208Pb
+</p>
+<h5>outputitems
+</h5>
+<p>Comma-separated list of items to be displayed. Items will be shown in html,csv, and xml output in order provided in the GET variable. This is an enumerated value.
+</p>        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

@@ -6,6 +6,23 @@ console.log('testinggg')
 $('#pub_year_range').hide();
 $('#exact_pub_year').hide();
 
+$('#basic-tooltip').hide();
+$('#year-tooltip').hide();
+$('#geography-tooltip').hide();
+$('#output-tooltip').hide();
+
+$('#basic').click(function(event){
+  $('#basic-tooltip').slideToggle()
+  })
+  $('#year').click(function(event){
+    $('#year-tooltip').slideToggle()
+    })
+    $('#geography').click(function(event){
+      $('#geography-tooltip').slideToggle()
+      })
+      $('#output').click(function(event){
+        $('#output-tooltip').slideToggle()
+        })
 var x = $( "input[type=radio][name=year]:checked" ).val();
 console.log(x)
      $('input[type="radio"][name=year]').click(function() {
