@@ -21,7 +21,6 @@
           </div>
           <br>
           <div class="form-row">
-            <legend class="legend">Journal/DOI</legend>
             <div class="col">
               <label for="journal">Journal</label>
               <input type="text" class="form-control" name="journal" id="journal">
@@ -30,6 +29,41 @@
               <label for="doi">DOI</label>
               <input type="text" class="form-control" name="doi" id="doi">
             </div>
+          </div>
+          <br>
+          <div id="sample">
+          <legend class="legend">Sample</legend>
+        </div>
+          <div class="form-row">
+            <div class="col">
+              <label for="sample_id">sample_id</label>
+              <input type="text" class="form-control" name="sample_id" id="sample_id">
+            </div>
+            <div class="col">
+              <label for="exactage">Exact Age</label>
+              <input type="text" class="form-control" name="exactage" id="exactage">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <label for="minage">Minimum Age</label>
+              <input type="text" class="form-control" name="minage" id="minage">
+            </div>
+            <div class="col">
+              <label for="maxage">Maximum Age</label>
+              <input type="text" class="form-control" name="maxage" id="maxage">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <label for="geologicalage">geologicalage</label>
+              <input type="text" class="form-control" name="geologicalage" id="geologicalage">
+            </div>
+            <div class="col">
+
+            <label for="material">material</label>
+            <input type="text" class="form-control" name="material" id="material">
+          </div>
           </div>
           <br>
           <div class="year">
@@ -119,8 +153,8 @@
             </div>
             <div class="col">
               <label>Show Column Names</label>
-              <input id="yes" type="radio" name="show_column_names" value="yes">
-              <label class="radio-label" for="yes">Yes</label>
+              <input id="yes" type="radio" name="show_column_names" checked value="yes">
+              <label class="radio-label" for="yes" >Yes</label>
               <input id="no" type="radio" name="show_column_names" value="no">
               <label class="radio-label" for="no">No</label>
             </div>
@@ -149,8 +183,8 @@
       </div>
     </div>
     <div class="col-lg-3">
-      <div class="tooltips">
-        <div id="basic-tooltip">
+      <div class="tooltips" id="tooltip">
+        <div id="basic-tooltip" class="dropdown">
           <h5>Author</h5>
           <p>Author of reference citation</p>
           <h5>Title</h5>
@@ -187,16 +221,13 @@
           <p>Western bound of a geographic envelope used to constrain results geographically. If a western bound is provided, a north, east, and south value must also be provided.</p>
         </div>
         <div id="output-tooltip">
-<h5>          searchtype
-</h5>
-<p>          Desired type of search query. Possible values are "count", "rowdata", and "distinctitems"
+<h5>searchtype</h5>
+<p>Desired type of search query. Possible values are "count", "rowdata", and "distinctitems"
   <br><br>
-
           count: returns count of results from query.
           rowdata: returns table of results from query in the format of "outputtype" below. distinctitems: returns list of distinct items found within current query in the format of "outputtype" below.<p>
-<h5>          outputtype
-</h5>
-<p>          Desired output type from query. Possible values are "html", "csv", "xml", "json", "jsonp" and "staticmap".
+<h5>outputtype</h5>
+<p>Desired output type from query. Possible values are "html", "csv", "xml", "json", "jsonp" and "staticmap".
   <br><br>
 
           <strong>html:</strong> returns HTML table of results from query.
@@ -214,18 +245,26 @@
 
           Please note: When a searchtype of "count" is set, "html", "csv", and "staticmap" will return a plaintext integer count of samples from the query.<p>
 
-<h5>            standarditems
-</h5>
-<p>This element has a value of yes/no and determines if the standard chemical values should be displayed in the html,csv, or xml outputs. Using the standard items allows a consistent output from query to query for use in tables.
-</p>
-<h5>Standard items are:
-</h5>
-<p>SiO2, TiO2, Al2O3, Cr2O3, Fe2O3, Fe2O3 Total, FeO, FeO Total, NiO, MnO, MgO, CaO, Na2O, K2O, P2O5, LOI, H2O, H2O-, H2O+, S, Co2, F, Cl, Ag, As, Au, B, Ba, Be, Bi, Cd, Co, Cr, Cs, Cu, Ga, Hf, Hg, I, Ir, K, Li, Mn, Mo, Nb, Ni, Os, Pb, Pd, Pt, Rb, Re, S, Sb, Sc, Se, Sn, Sr, Ta, Te, Th, Ti, Tl, U, V, W, Y, Zn, Zr, La, Ce, Pr, Nd, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, 87Sr / 86Sr, 143Nd / 144Nd, 206Pb / 204Pb, 207Pb / 204Pb, 208Pb / 204Pb, 176Hf / 177Hf, 176Lu / 177Hf, 187Os / 188Os, 10Be / Be, 3He / 4He, 87Rb/86Sr, 147Sm/144Nd, 238U/206Pb, 235U/207Pb, 232Th/208Pb
-</p>
-<h5>outputitems
-</h5>
-<p>Comma-separated list of items to be displayed. Items will be shown in html,csv, and xml output in order provided in the GET variable. This is an enumerated value.
-</p>        </div>
+<h5>standarditems</h5>
+<p>This element has a value of yes/no and determines if the standard chemical values should be displayed in the html,csv, or xml outputs. Using the standard items allows a consistent output from query to query for use in tables.</p>
+<h5>Standard items are:</h5>
+<p>SiO2, TiO2, Al2O3, Cr2O3, Fe2O3, Fe2O3 Total, FeO, FeO Total, NiO, MnO, MgO, CaO, Na2O, K2O, P2O5, LOI, H2O, H2O-, H2O+, S, Co2, F, Cl, Ag, As, Au, B, Ba, Be, Bi, Cd, Co, Cr, Cs, Cu, Ga, Hf, Hg, I, Ir, K, Li, Mn, Mo, Nb, Ni, Os, Pb, Pd, Pt, Rb, Re, S, Sb, Sc, Se, Sn, Sr, Ta, Te, Th, Ti, Tl, U, V, W, Y, Zn, Zr, La, Ce, Pr, Nd, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, 87Sr / 86Sr, 143Nd / 144Nd, 206Pb / 204Pb, 207Pb / 204Pb, 208Pb / 204Pb, 176Hf / 177Hf, 176Lu / 177Hf, 187Os / 188Os, 10Be / Be, 3He / 4He, 87Rb/86Sr, 147Sm/144Nd, 238U/206Pb, 235U/207Pb, 232Th/208Pb</p>
+<h5>outputitems</h5>
+<p>Comma-separated list of items to be displayed. Items will be shown in html,csv, and xml output in order provided in the GET variable. This is an enumerated value.</p>
+</div>
+<div id="sample-tooltip">
+<h5>  sampleid</h5>
+<p>Sample Identifier provided by source database.</p>
+<h5>minage</h5>
+<p>Minimum age of the sample. (Ma)</p>
+<h5>maxage</h5>
+<p>Maximum age of the sample. (Ma)</p>
+<h5>exactage</h5>
+<p>Exact age of the sample. (Ma)</p>
+<h5>geologicalage</h5><p>Geological age of the sample. This is an enumerated value. Possible values can be found in the EarthChem SOAP search schema.</p>
+<h5>material</h5>
+<p>Material composition of the sample. This is an enumerated value. Possible values can be found in the EarthChem SOAP search schema.</p>
+</div>
       </div>
     </div>
   </div>

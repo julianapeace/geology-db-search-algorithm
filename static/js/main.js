@@ -10,6 +10,8 @@ $('#basic-tooltip').hide();
 $('#year-tooltip').hide();
 $('#geography-tooltip').hide();
 $('#output-tooltip').hide();
+$('#sample-tooltip').hide();
+
 
 $('#basic').click(function(event){
   $('#basic-tooltip').slideToggle()
@@ -22,7 +24,10 @@ $('#basic').click(function(event){
       })
       $('#output').click(function(event){
         $('#output-tooltip').slideToggle()
-        })
+        }
+        $('#sample').click(function(event){
+          $('#sample-tooltip').slideToggle()
+          })
 var x = $( "input[type=radio][name=year]:checked" ).val();
 console.log(x)
      $('input[type="radio"][name=year]').click(function() {
@@ -36,5 +41,10 @@ console.log(x)
            $('#exact_pub_year').slideToggle();
          }
      });
+
+$('table').addClass('classname');
+$('.ectable table').addClass('2classname');
+$('.ectable').addClass('3classname');
+
 
 });
