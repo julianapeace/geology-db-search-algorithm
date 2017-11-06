@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<a href="/" class="btn btn-secondary">Back</a>
+<p>Count: {{count}}</p>
+{% if html %}
+<h1>results</h1>
+{{results | safe}}
+{% else %}
+<h1>results</h1>{{results}}
+{% endif %}
+
+{% endblock %}

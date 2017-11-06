@@ -17,17 +17,14 @@ import json
 from jinja2 import \
     Environment, PackageLoader, select_autoescape
 
-PORT = int(os.environ.get('PORT', '8888'))
+PORT = int(os.environ.get('PORT', '8080'))
 
 ENV = Environment(
     loader=PackageLoader('myapp', 'templates'),
     autoescape=select_autoescape(['html', 'xml'])
 )
-class BaseHandler(tornado.web.RequestHandler):
-    def get_current_user(self):
-        return self.get_secure_cookie("user")
 
-class TemplateHandler(BaseHandler):
+class TemplateHandler(tornado.web.RequestHandler):
     def render_template(self, tpl, context):
         template = ENV.get_template(tpl)
         self.write(template.render(**context))
@@ -35,58 +32,75 @@ class TemplateHandler(BaseHandler):
 class MainHandler(TemplateHandler):
     def get(self):
         self.set_header('Cache-Control','no-store, no-cache, must-revalidate, max-age=0')
-        p = 'hello'
-        self.render_template("index.html",{"p": p})
-        
+        self.render_template("index.html",{})
+
 class QueryHandler(TemplateHandler):
     def post(self):
-        #outputitems of outputitems much be in strings
-        outputitems = "source,sample_id"
+        url = 'http://ecp.iedadata.org/restsearchservice'
+
+        author = self.get_body_argument("author")
+        searchtype = self.get_body_argument("searchtype")
+        output_type = self.get_body_argument("output_type")
+        output_fields = self.get_body_arguments("output_fields")
+        show_column_names = self.get_body_argument("show_column_names")
+        outputitems = ",".join(output_fields)
+
         params = {
-            'author': 'peter',
-            'searchtype' : 'rowdata',
-            'outputtype' :'json', #html, csv, staticmap, jsonp, xml
-            'showcolumnnames' : 'yes',
+            'author': author,
+            'searchtype' : searchtype,
+            'outputtype' :output_type,
+            'showcolumnnames' : show_column_names,
             'outputitems' : outputitems
         }
-        # POSSIBLE OUTPUTITEMS
-        # sample_id
-        # source
-        # url
-        # title
-        # journal
-        # author
-        # longitude
-        # latitude
-        # method
-        # material
-        # type
-        # composition
-        # rock_name
         try:
-            response = requests.get('http://ecp.iedadata.org/restsearchservice', params=params)
+            response = requests.get(url, params=params)
             print(response)
             print(response.url)
+            if output_type=='json':
+                html = "false"
+                parsed = json.loads(response.text)
+                results = json.dumps(parsed, sort_keys=True, indent=2)
+            elif output_type =="html":
+                #get the count
+                params_count={
+                'author': author,
+                'searchtype' : "count",
+                'outputtype' :output_type,
+                'showcolumnnames' : show_column_names,
+                'outputitems' : outputitems
+                }
+
+                count_response = requests.get(url, params=params_count)
+                count = count_response.text
+
+                html = "true"
+                results = response.text
+            else:
+                html = "false"
+                count = ""
+                results = response.text
+
             # print ('Response:')
-            parsed = json.loads(response.text)
-            print(parsed)
-            print (json.dumps(parsed, sort_keys=True, indent=2))
+            # print(results)
+            self.render_template("response.html",{"html":html, "results":results, "count":count})
 
         except Exception as e:
             print('Error:')
             print(e)
+            #http://ecp.iedadata.org/restsearchservice?author=smith&searchtype=rowdata&outputtype=html&showcolumnnames=yes&outputitems=sample_id,source,longitude,latitude
+            self.redirect("/")
 
-class make_app(tornado.web.Application):
-    def __init__(self):
-        handlers = [
+
+def make_app():
+  return tornado.web.Application([
         (r"/", MainHandler),
+        (r"/query", QueryHandler),
         (
             r"/static/(.*)",
             tornado.web.StaticFileHandler,
             {'path': 'static'}
         ),
-        ]
-        tornado.web.Application.__init__(self, handlers, autoreload=True)
+        ], autoreload=True)
 
 
 if __name__ == "__main__":

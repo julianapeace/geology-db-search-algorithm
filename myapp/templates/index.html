@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="queryform">
+<form class="" action="/query" method="post">
+  <div class="form-row">
+    <legend class="legend">Basic</legend>
+    <div class="col">
+      <label for="author">Author</label>
+      <input type="text" class="form-control" name="author" id="author" value = "peter">
+    </div>
+    <div class="col">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" name="title" id="title">
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <legend class="legend">Journal/DOI</legend>
+    <div class="col">
+      <label for="journal">Journal</label>
+      <input type="text" class="form-control" name="journal" id="journal">
+    </div>
+    <div class="col">
+      <label for="doi">DOI</label>
+      <input type="text" class="form-control" name="doi" id="doi">
+    </div>
+  </div>
+  <br>
+  <div class="year">
+    <legend class="legend">Year</legend>
+  <div class="form-group">
+    <label>Publication Year</label>
+    <input id="range" type="radio" name="year" value="range">
+    <label class="radio-label" for="range">Range</label>
+    <input id="exact" type="radio" name="year" value="exact">
+    <label class="radio-label" for="exact">Exact</label>
+  </div>
+  <div class="form-row" id="pub_year_range">
+    <div class="col">
+      <label for="minpubyear">minpubyear</label>
+      <input type="text" class="form-control" name="minpubyear" id="minpubyear">
+    </div>
+    <div class="col">
+      <label for="maxpubyear">maxpubyear</label>
+      <input type="text" class="form-control" name="maxpubyear" id="maxpubyear">
+    </div>
+  </div>
+  <div class="form-row" id="exact_pub_year">
+    <div class="col">
+      <label for="exactpubyear">exactpubyear</label>
+      <input type="text" class="form-control" name="exactpubyear" id="exactpubyear">
+    </div>
+  </div>
+</div>
+<br>
+  <div class="form-row">
+    <legend class="legend">Output</legend>
+    <div class="col">
+    <label for="output_type">Output Type</label>
+    <select class="form-control" name="output_type" id="output">
+      <option>html</option>
+      <option>json</option>
+      <option>csv</option>
+      <option>jsonp</option>
+      <option>xml</option>
+      <option>staticmap</option>
+    </select>
+  </div>
+  <div class="col">
+    <label for="searchtype">Search Type</label>
+    <select class="form-control" name="searchtype" id="searchtype">
+      <option>rowdata</option>
+      <option>count</option>
+      <option>distinctitems</option>
+    </select>
+  </div>
+</div>
+<br>
+<div class="form-group">
+  <label>Show Column Names (applicable to csv and html outputs)</label>
+  <input id="yes" type="radio" name="show_column_names" value="yes">
+  <label class="radio-label" for="yes">Yes</label>
+  <input id="no" type="radio" name="show_column_names" value="no">
+  <label class="radio-label" for="no">No</label>
+</div>
+
+  <div class="form-group">
+    <label for="output_fields">Select Multiple Outputs</label>
+    <select multiple class="form-control" name="output_fields" id="output_fields" size="15">
+      <option>sample_id</option>
+      <option>url</option>
+      <option>author</option>
+      <option>source</option>
+      <option>longitude</option>
+      <option>latitude</option>
+      <option>title</option>
+      <option>journal</option>
+      <option>method</option>
+      <option>material</option>
+      <option>type</option>
+      <option>composition</option>
+      <option>rock_name</option>
+    </select>
+  </div>
+  <button class="btn btn-secondary" type="submit" name="button">SUBMIT</button>
+</form>
+</div>
+
+
+{% endblock %}
