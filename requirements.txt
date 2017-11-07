@@ -3,6 +3,6 @@ Jinja2==2.9.6
 python-dotenv==0.7.1
 requests==2.18.4
 urllib3==1.22
-csv==1.0
+csv
 dotenv==0.2.0
 datetime==4.2
