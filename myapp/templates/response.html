@@ -3,12 +3,15 @@
 {% block content %}
 
 <a href="/" class="btn btn-secondary">Back</a>
-<p>Count: {{count}}</p>
-{% if html %}
-<h1>results</h1>
-{{results | safe}}
-{% else %}
+
+{% if output_dict['csv']=='false' and output_dict['html'] == 'false' %}
 <h1>results</h1>{{results}}
+{% elif output_dict['csv']=='true'%}
+<a href="{{results}}">Download CSV</a>
+{% else %}
+{{results | safe}}
 {% endif %}
+
+
 
 {% endblock %}

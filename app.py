@@ -12,6 +12,8 @@ load_dotenv('.env')
 import urllib.parse
 import requests
 import json
+import csv
+from datetime import *
 
 #templating engine
 from jinja2 import \
@@ -81,22 +83,43 @@ class testHandler(TemplateHandler):
                 params[key] = value
         print(params)
         print(author, title, journal, doi, searchtype, outputtype, outputitems, showcolumnnames, minpubyear, maxpubyear, exactpubyear, sampleid, exactage, minage, maxage, geologicalage, material)
+
         try:
             response = requests.get(url, params=params)
             print(response)
             print(response.url)
             if outputtype=='json':
-                html = "false"
+                output_dict = {'html':'false', 'csv':'false'}
                 parsed = json.loads(response.text)
                 results = json.dumps(parsed, sort_keys=True, indent=2)
             elif outputtype=='html':
-                html="true"
+                output_dict = {'html':'true', 'csv':'false'}
                 results = response.text
+            elif outputtype =='csv':
+                myquery = response.text
+                splitn = myquery.split('\n')
+                value_list = []
+                for i in splitn:
+                    x = i.split(',')
+                    value_list.append(x)
+                print(value_list)
+                file_name = datetime.strftime(datetime.now(), '%Y%m%d%H%m%s') + '.csv'
+                file_path = os.path.join('static/exports/', file_name)
+
+                if not os.path.exists('static/exports/'):
+                            os.makedirs('static/exports/')
+                with open(file_path, 'w', newline='') as outfile:
+                    writer = csv.writer(outfile, delimiter = ',')
+                    for x in value_list:
+                        writer.writerow(x)
+                outfile.close()
+                output_dict = {'html':'false', 'csv':'true'}
+                results = file_path
             else:
-                html = "false"
+                output_dict = {'html':'false', 'csv':'false'}
                 results = response.text
 
-            self.render_template("response.html",{"html":html, "results":results})
+            self.render_template("response.html",{"output_dict":output_dict, "results":results})
 
         except Exception as e:
             print('Error:')

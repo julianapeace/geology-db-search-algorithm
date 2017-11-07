@@ -24,7 +24,7 @@ $('#basic').click(function(event){
       })
       $('#output').click(function(event){
         $('#output-tooltip').slideToggle()
-        }
+      })
         $('#sample').click(function(event){
           $('#sample-tooltip').slideToggle()
           })
