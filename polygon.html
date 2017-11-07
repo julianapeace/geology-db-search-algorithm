@@ -56,40 +56,20 @@
 
         google.maps.event.addListener(map, 'click', function(event) {
           console.log(event.latLng)
-          addLatLngToPoly(event.latLng, polygon);
+          // console.log(event.latLng.lat())
         });
         drawingManager.setMap(map);
       }
-
-      function addLatLngToPoly(latLng, polygon) {
-        var path = polygon.getPath();
-        // Because path is an MVCArray, we can simply append a new coordinate
-        // and it will automatically appear
-        path.push(latLng);
-
-        // Update the text field to display the polyline encodings
-        var encodeString = google.maps.geometry.encoding.encodePath(path);
-        if (encodeString) {
-          document.getElementById('encoded-polyline').value = encodeString;
-        }
-      }
-
-      function showArrays(event) {
-       // Since this polygon has only one path, we can call getPath() to return the
-       // MVCArray of LatLngs.
-       var vertices = this.getPath();
-       console.log(vertices)
-       var contentString = '<b>Bermuda Triangle polygon</b><br>' +
-           'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
-           '<br>';
-       // Iterate over the vertices.
-       for (var i =0; i < vertices.getLength(); i++) {
-         var xy = vertices.getAt(i);
-         contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-             xy.lng();
-       }
-       console.log(contentString)
-     }
+      //
+      // function addLatLngToPoly(latLng, polygon) {
+      //   var path = polygon.getPath();
+      //   path.push(latLng);
+      //   var encodeString = google.maps.geometry.encoding.encodePath(path);
+      //   if (encodeString) {
+      //     document.getElementById('encoded-polyline').value = encodeString;
+      //   }
+      // }
+    //  }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqPPUV6iYjQFfD2rPx4J3KPN6wvbYHVrs&libraries=drawing&callback=initMap"
          async defer></script>
