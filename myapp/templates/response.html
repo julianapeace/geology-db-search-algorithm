@@ -1,17 +1,17 @@
-{% extends 'base.html'%}
-
-{% block content %}
+{% extends 'base.html'%} {% block content %}
 
 <a href="/" class="btn btn-secondary">Back</a>
 
 {% if output_dict['csv']=='false' and output_dict['html'] == 'false' %}
+
 <h1>results</h1>{{results}}
+
 {% elif output_dict['csv']=='true'%}
+
 <a href="{{results}}">Download CSV</a>
-{% else %}
-{{results | safe}}
+
+{% else %} {{results | safe}}
+
 {% endif %}
-
-
 
 {% endblock %}

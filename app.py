@@ -127,67 +127,31 @@ class testHandler(TemplateHandler):
             self.redirect("/")
 
 
-class QueryHandler(TemplateHandler):
-    def post(self):
-        url = 'http://ecp.iedadata.org/restsearchservice'
+class AuthorHandler(TemplateHandler):
+    def get(self, author):
+        import scholarly
+        print(author)
+        def hello(author):
+            search_query = scholarly.search_author(author)
+            author = next(search_query).fill()
+            print(author)
+            # Print the titles of the author's publications
+            print([pub.bib['title'] for pub in author.publications])
 
-        author = self.get_body_argument("author")
-        searchtype = self.get_body_argument("searchtype")
-        output_type = self.get_body_argument("output_type")
-        output_fields = self.get_body_arguments("output_fields")
-        show_column_names = self.get_body_argument("show_column_names")
-        outputitems = ",".join(output_fields)
+            # Take a closer look at the first publication
+            pub = author.publications[0].fill()
+            print(pub)
 
-        params = {
-            'author': author,
-            'searchtype' : searchtype,
-            'outputtype' :output_type,
-            'showcolumnnames' : show_column_names,
-            'outputitems' : outputitems
-        }
-        try:
-            response = requests.get(url, params=params)
-            print(response)
-            print(response.url)
-            if output_type=='json':
-                html = "false"
-                parsed = json.loads(response.text)
-                results = json.dumps(parsed, sort_keys=True, indent=2)
-            elif output_type =="html":
-                #get the count
-                params_count={
-                'author': author,
-                'searchtype' : "count",
-                'outputtype' :output_type,
-                'showcolumnnames' : show_column_names,
-                'outputitems' : outputitems
-                }
-
-                count_response = requests.get(url, params=params_count)
-                count = count_response.text
-
-                html = "true"
-                results = response.text
-            else:
-                html = "false"
-                count = ""
-                results = response.text
-
-            # print ('Response:')
-            # print(results)
-            self.render_template("response.html",{"html":html, "results":results, "count":count})
-
-        except Exception as e:
-            print('Error:')
-            print(e)
-            #http://ecp.iedadata.org/restsearchservice?author=smith&searchtype=rowdata&outputtype=html&showcolumnnames=yes&outputitems=sample_id,source,longitude,latitude
-            self.redirect("/")
-
+            # Which papers cited that publication?
+            print([citation.bib['title'] for citation in pub.get_citedby()])
+        hello(author)
+        self.render_template('author.html',{'author':author})
 
 def make_app():
   return tornado.web.Application([
         (r"/", MainHandler),
         (r"/query", testHandler),
+        (r"/authors/(.*)", AuthorHandler),
         (
             r"/static/(.*)",
             tornado.web.StaticFileHandler,
