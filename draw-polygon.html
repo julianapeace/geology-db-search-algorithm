@@ -67,12 +67,6 @@
         // and it will automatically appear
         path.push(latLng);
 
-        // Update the text field to display the polyline encodings
-        var encodeString = google.maps.geometry.encoding.encodePath(path);
-        if (encodeString) {
-          document.getElementById('encoded-polyline').value = encodeString;
-        }
-      }
 
       function showArrays(event) {
        // Since this polygon has only one path, we can call getPath() to return the
